@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace = "com.sereal.board.mapper.TBoardContentMapper">
+
+	<!-- ====================================================================================== -->
+	<!-- insert -->
+	<!-- ====================================================================================== -->
+	
+
+	<!-- 1개의 게시글 입력 -->
+	<insert id = "insertBoardContent">
+		<selectKey keyProperty = "brd_idx" order = "BEFORE" resultType ="integer">
+		   	select Auto_increment 
+			from information_schema.tables 
+			where table_schema = 'jumanji' and table_name = 't_board_content';
+		</selectKey>
+		
+		insert into t_board_content(grp_id, brd_idx, user_idx, brd_title, brd_content, read_count, parent_brd_idx,
+		brd_depth, top_flag, del_flag, secret_flag, reg_ip, reg_password, prd_url, brd_short, brd_good_count, brd_title_img_real_path, reg_nm, reg_dt)		
+		values ( #{grp_id}, #{brd_idx}, #{user_idx}, #{brd_title}, #{brd_content}, #{read_count}, #{parent_brd_idx}, 
+		#{brd_depth}, #{top_flag}, #{del_flag}, #{secret_flag}, #{reg_ip}, #{reg_password}, #{prd_url}, #{brd_short}, #{brd_good_count}, #{brd_title_img_real_path},
+		#{reg_nm}, #{reg_dt} )	
+	</insert>
+	
+	
+	
+	
+	<!-- ====================================================================================== -->	
+	<!-- select -->
+	<!-- ====================================================================================== -->
+	
+	<!-- 1개의 게시글 조회 -->
+	<select id = "selectBoardContent" resultType="com.sereal.board.model.TBoardContentModel">		
+		select * from t_board_content 
+		where brd_idx = #{brd_idx} 
+		and grp_id = #{grp_id}			
+	</select>
+	
+	<!-- 1개의 게시판 그룹ID에 해당하는  모든 게시글 조회(del_flag가 Y 아닌 것만)-->
+	<select id = "selectBoardContentAll" resultType="com.sereal.board.model.TBoardContentModel">				
+		select * from t_board_content 	
+		where 1 = 1
+		and 
+		grp_id = #{grp_id}   				
+		and del_flag != 'Y'	
+		and brd_depth = 0
+		order by 1 desc;
+	</select>
+	
+	<!-- 1개의 게시판 그룹ID에 해당하는  모든 게시글 조회(del_flag가 Y 아닌 것만), 페이징 -->
+	<select id = "selectBoardContentAllPaging" resultType="com.sereal.board.model.TBoardContentModel">				
+		select @rownum:=@rownum+1 as rown,
+		a.* 
+		from 
+		t_board_content a, (select @rownum:= #{start_page} ) b
+		where a.del_flag != 'Y'
+		and a.grp_id = #{grp_id}
+		and a.brd_depth = 0
+		order by a.brd_idx desc
+		limit #{start_page}, #{end_page}	
+	</select>
+	
+	<!-- 1개의 게시판 그룹ID에 해당하는  모든 게시글 개수 조회(del_flag가 Y 아닌 것만)-->
+	<select id = "selectBoardContentAllCount" resultType="integer">				
+		select count(*) from t_board_content 	
+		where 1 = 1
+		and 
+		grp_id = #{grp_id}   				
+		and del_flag != 'Y'	
+	</select>
+	
+	<!-- 1개의 게시글에 해당하는 모든 댓글 조회(del_flag가 Y 아닌 것만) -->
+	<select id = "selectBoardContentReply" resultType="com.sereal.board.model.TBoardContentModel">				
+		select * from t_board_content
+		where parent_brd_idx = #{parent_brd_idx} 
+		and del_flag != 'Y'
+		and brd_depth >= 1		
+	</select>
+	
+	<!-- 1개 댓글의 비밀번호 일치여부 조회 -->
+	<select id = "selectBoardContentReplyPassword" resultType="com.sereal.board.model.TBoardContentModel">				
+		select * from t_board_content
+		where brd_idx = #{brd_idx}
+		and reg_password = #{reg_password}
+	</select>
+	
+	
+	<!-- ====================================================================================== -->
+	<!-- update -->
+	<!-- ====================================================================================== -->
+	
+	
+	
+	<!-- 1개의 게시글 수정 -->
+	<update id = "modifyBoardContent">
+		update t_board_content
+		set
+		brd_idx = #{brd_idx}
+		<if test="brd_title != null and brd_title != ''">
+		,brd_title = #{brd_title}
+		</if>
+		<if test="brd_content != null and brd_content != ''">
+		,brd_content = #{brd_content}
+		</if>
+		<if test="parent_brd_idx != null and parent_brd_idx != ''">		
+		,parent_brd_idx = #{parent_brd_idx}
+		</if>
+		<if test="top_flag != null and top_flag != ''">
+		,top_flag = #{top_flag}
+		</if>
+		<if test="brd_depth != null and brd_depth != ''">
+		,brd_depth = #{brd_depth}		
+		</if>
+		<if test="del_flag != null and del_flag != ''">
+		,del_flag = #{del_flag}		
+		</if>
+		<if test="secret_flag != null and secret_flag != ''">
+		,secret_flag = #{secret_flag}
+		</if>
+		<if test="reg_ip != null and reg_ip != ''">
+		,reg_ip = #{reg_ip}
+		</if>
+		<if test="reg_password != null and reg_password != ''">
+		,reg_password = #{reg_password}
+		</if>
+		<if test="prd_url != null and prd_url != ''">
+		,prd_url = #{prd_url}
+		</if>
+		<if test="brd_short != null and brd_short != ''">
+		,brd_short = #{brd_short}
+		</if>
+		<if test="brd_good_count != null and brd_good_count != ''">
+		,brd_good_count = #{brd_good_count}
+		</if>	
+		<if test="brd_title_img_real_path != null and brd_title_img_real_path != ''">
+		,brd_title_img_real_path = #{brd_title_img_real_path}
+		</if>	
+		where 1 = 1 
+		and brd_idx = #{brd_idx}	
+		and grp_id = #{grp_id}
+	</update>
+	
+	<!-- 1개의 게시글 조회수 증가 -->
+	<update id = "modifyBoardCount">
+		update t_board_content
+		set 
+		read_count = #{read_count} + 1
+		where brd_idx = #{brd_idx}	
+		and grp_id = #{grp_id}
+	</update>
+	
+	<!-- 1개의 게시글 삭제 처리  -->
+	<update id = "modifyBoardDelete">
+		update t_board_content
+		set 
+		del_flag = 'Y'
+		where brd_idx = #{brd_idx}	
+		and grp_id = #{grp_id}
+	</update>
+	
+	
+	<!-- ====================================================================================== -->
+	<!-- delete-->
+	<!-- ====================================================================================== -->
+
+	
+	<!-- 1개의 게시글 삭제  -->
+	<delete id="deleteBoardContent">
+		delete from t_board_content 
+		where brd_idx = #{brd_idx}
+		and grp_id = #{grp_id}
+	</delete>
+</mapper>

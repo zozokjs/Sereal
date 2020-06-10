@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- My Batis 사용함 -->
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace = "com.sereal.member.mapper.TMemberInfoMapper">
+	
+<!-- 	<select id = "selectMember" resultType="com.jumanji.member.model.TMemberInfoModel">
+		select * from t_member_info where user_idx = #{userIdx}
+
+	</select> -->
+	
+	<select id = "selectMember" resultType="com.sereal.member.model.TMemberInfoModel">		
+		select * from t_member_info where user_id = #{user_id} and user_pw = #{user_pw}
+	</select>
+	
+	<select id = "selectMember2" resultType="com.sereal.member.model.TMemberInfoModel">		
+		select * from t_member_info where user_idx = #{user_idx}
+	</select>
+</mapper>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace = "com.sereal.board.mapper.TBoardGroupMapper">
+		
+	<select id = "selectBoardGroup" resultType="com.sereal.board.model.TBoardGroupModel">		
+		select * from t_board_group where grp_id = #{grp_id}	
+	</select>
+	
+</mapper>

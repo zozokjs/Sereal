@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace에는 인터페이스를 명시해야함 -->
+<mapper namespace = "com.sereal.member.mapper.TimeMapper">
+
+	<!-- id는 그 인터페이스의 메소드 이름을, resultType은 메소드 리턴 타입에 맞춰야 한다 -->
+	<select id = "getTime2" resultType = "string">
+		select sysdate()
+	</select>
+</mapper>
