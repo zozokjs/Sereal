@@ -21,43 +21,86 @@
 
 </style>
 
-<div id="wrapper">
-    <!-- content-->
-    <div class="content">
-        <section class="gray-bg no-top-padding-sec" id="sec1">
-            <div class="container">
-            	<div class="fl-wrap">
-            		<div class="row" style="display: flex; flex-wrap: wrap; justify-content: center; align-content: stretch; align-items: center;">
-            			<div class="col-md-10">
-            				<div class="col-4">
-						       	<c:choose>
-									<c:when test = "${sessionModel.userInfo.userId == null}">
-										<button id = "adminLogin" class="btn color-bg" style="margin-top:100px; padding-right:25px;">관리자 로그인</button>
-									</c:when>
-									<c:when test = "${sessionModel.userInfo.userId != null}">
-										<button class="btn btn-primary" type="button" id = "write" onclick="location.href='/board/generalBoardWrite'" style="padding-right:22px; background-color:#0062cc; margin-top:100px;">글쓰기</button>					       	
-										<button id = "adminLogout" class="btn color-bg" style="margin-top:100px; padding-right:25px;">관리자 로그아웃</button>	
-									</c:when>		    
-							    </c:choose>
-					       	
-					        </div>
-            				<div class="listing-item-container init-grid-items fl-wrap nocolumn-lic">
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+	<div class="container">
+		<a class="navbar-brand" href="#">Start Bootstrap</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarResponsive">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="#">Home
+						<span class="sr-only">(current)</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">About</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Services</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Contact</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</nav>
 
-								<!-- Start of repeatHTML Div -->
-								<div id = "repeatHTML"></div>
-								
-            				</div>            			
-           				 	
-           				</div>
-            			<!--  End of col-md-8  -->
-            		</div>
-            	</div>            
-  			</div>				
-    	</section>
-   	</div>
-   <!--content end-->
+<!-- Page Content -->
+<div class="container">
+	<div class="row" style="flex-direction: column; flex-wrap: nowrap; justify-content: center; align-items: center;">
+		<div class="col-lg-9" style="margin-top: 30px;">
+			<div class="row">
+				<div class="col-4">
+			       	<c:choose>
+						<c:when test = "${sessionModel.userInfo.userId == null}">
+							<button id = "adminLogin" class="btn color-bg" style="margin-top:100px; padding-right:25px;">관리자 로그인</button>
+						</c:when>
+						<c:when test = "${sessionModel.userInfo.userId != null}">
+							<button class="btn btn-primary" type="button" id = "write" onclick="location.href='/board/generalBoardWrite'" style="padding-right:22px; background-color:#0062cc; margin-top:100px;">글쓰기</button>					       	
+							<button id = "adminLogout" class="btn color-bg" style="margin-top:100px; padding-right:25px;">관리자 로그아웃</button>	
+						</c:when>		    
+				    </c:choose>
+		        </div>
+				
+				<div class="col-lg-12 col-md-6 mb-4">
+				
+					<!-- 반복부 -->
+					<div id = "repeatHTML"></div>
+					
+					<!-- 원본 -->
+					<!--   
+					<div class="card h-100">
+						<a href="#"><img class="card-img-top"
+							src="http://placehold.it/700x400" alt=""></a>
+						<div class="card-body">
+							<h4 class="card-title">
+								<a href="#">Item One</a>
+							</h4>
+							<h5>$24.99</h5>
+							<p class="card-text">Lorem ipsum dolor sit amet, consectetur
+								adipisicing elit. Amet numquam aspernatur!</p>
+						</div>
+						<div class="card-footer">
+							<small class="text-muted">&#9733; &#9733; &#9733; &#9733;
+								&#9734;</small>
+						</div>
+					</div>
+					
+					<!-- 원본 -->
+					
+				</div>
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- /.col-lg-9 -->
+	</div>
+	<!-- /.row -->
 </div>
-
+<!-- /.container -->
 <script  type="text/javascript" >
 
 var starting = 0;
@@ -320,42 +363,59 @@ function repeatHTML(data){
 		socketConnect(brd_idx);
 		
 		let repeatItem = "";
-		repeatItem +=  "<div class='listing-item' style='height: 511px; margin-bottom: 100px; margin-top: 150px;'> ";
-		repeatItem +=  "    <article class='geodir-category-listing fl-wrap'>";
-		repeatItem +=  "        <div class='geodir-category-img'>";
 		
-		//관리자 세션 없으면 정상 작동
+		repeatItem += "<div class='card h-100' style='margin-bottom:50px;'>";
+		
+		
+		//*상세화면 이동 영역
+		//관리자 세션 없을 때
 		<c:if test = "${sessionModel.userInfo.userId == null}">
+			//제품 링크가 없을 때  상세 화면으로 이동
 			if(data.rtData[idx].prd_url == null || data.rtData[idx].prd_url == ''){
-				repeatItem +=  "            <a href = '/board/search/"+data.rtData[idx].brd_idx+"/generalBoardView' style = 'width:498px; height:400px;' class='geodir-category-img-wrap img fl-wrap'>";
-			}else{
-				repeatItem +=  "            <a href = '"+data.rtData[idx].prd_url+"' style = 'width:498px; height:400px;' class='geodir-category-img-wrap img fl-wrap'>";			
+				repeatItem +=  "            <a href = '/board/search/"+data.rtData[idx].brd_idx+"/generalBoardView'>";
+			}
+			//제품 링크가 있을 때 해당 링크로 이동
+			else{
+				repeatItem +=  "            <a href = '"+data.rtData[idx].prd_url+"'>";			
 			}
 		</c:if>
-		//관리자 세션 있으면 상세 이동 정상 작동		
+		//관리자 세션 있다면 무조건 상세 화면으로 이동	
 		<c:if test = "${sessionModel.userInfo.userId != null}">
-				repeatItem +=  "            <a href = '/board/search/"+data.rtData[idx].brd_idx+"/generalBoardView' style = 'width:498px; height:400px;' class='geodir-category-img-wrap img fl-wrap'>";
+				repeatItem +=  "            <a href = '/board/search/"+data.rtData[idx].brd_idx+"/generalBoardView'>";
 		</c:if>
 		
 		
+		
+		//*이미지 표시 영역
 		if(data.rtData[idx].brd_title_img_real_path != null ){
-			repeatItem +=  "            <img src='"+data.rtData[idx].brd_title_img_real_path+"' style = 'width:493px; height:400px;' alt=''> ";
+			repeatItem +=  "            <img class='card-img-top' src='"+data.rtData[idx].brd_title_img_real_path+"' alt=''> ";
 			
-			//repeatItem +=  "            <img src='/resources/upload/2020/05/22/a86d71e5-8074-4653-893f-630e74391e36_05.png' alt=''> ";
+			//repeatItem +=  "            <img class='card-img-top' src='/resources/upload/no_Image.png' alt=''> ";
 		}else{
-			repeatItem +=  "             <img src='/resources/upload/no_Image.png' alt=''> ";			
+			repeatItem +=  "            <img class='card-img-top' src='/resources/upload/no_Image.png' alt=''> ";			
 		}
-		repeatItem +=  "            </a>";
-		repeatItem +=  "        </div>";
-		repeatItem +=  "        <div class='geodir-category-content fl-wrap title-sin_item'>";
-		repeatItem +=  "            <div class='geodir-category-content-title fl-wrap'>";
-		repeatItem +=  "                <div class='geodir-category-content-title-item'>";
-		repeatItem +=  "                    <h3 class='title-sin_map'><a href='/board/search/"+data.rtData[idx].brd_idx+"/generalBoardView'>"+title+"</a></span></h3>";
-		repeatItem +=  "                </div>";
-		repeatItem +=  "            </div>";
-		repeatItem +=  "            <div class='geodir-category-text fl-wrap'>";
-		repeatItem +=  "                <p class='small-text' style='height:150px;'>"+brd_short+"</p>";
-		repeatItem +=  "            </div>";
+		repeatItem += "   </a>";
+		repeatItem += "   <div class='card-body'> ";
+		
+		
+		
+		//*제품 제목 영역
+		repeatItem += "       <h4 class='card-title'>";
+		repeatItem += "           <a href='/board/search/"+data.rtData[idx].brd_idx+"/generalBoardView'>"+title+"</a>";
+		repeatItem += "        </h4>";
+		
+		
+		//repeatItem += "        <h5>$24.99</h5>";
+		
+		//*제품 설명 영역
+		repeatItem +=  "       <p class='card-text'>"+brd_short+"</p>";
+		repeatItem += "    </div>";
+		repeatItem += "    <div class='card-footer'>";
+		repeatItem += "         <small class='text-muted'>&#9733; &#9733; &#9733; &#9733; &#9734;</small>";
+		repeatItem += "    </div>";
+		
+		
+		/*
 		
 		//좋아요 영역 시작
 		repeatItem +=  "            <div class='geodir-category-footer liker2 fl-wrap'>";
@@ -380,6 +440,7 @@ function repeatHTML(data){
 		repeatItem +=  "                	<strong id= 'realTimeWatch_id"+data.rtData[idx].brd_idx+"' style=''>25명</strong></div>";
 		repeatItem +=  "        		</div>";
 		//실시간 조회 영역 끝
+		*/
 		
 		repeatItem += "                <input type='hidden' class = 'brd_content_brd_idx' value='"+data.rtData[idx].brd_idx+"' > ";
 		repeatItem += "                <input type='hidden' class = 'brd_content_brd_content' value='"+data.rtData[idx].brd_content+"' > ";
@@ -393,10 +454,7 @@ function repeatHTML(data){
 		repeatItem += "                <input type='hidden' class = 'brd_content_secret_flag' value='"+data.rtData[idx].secret_flag+"' > ";
 		repeatItem += "                <input type='hidden' class = 'brd_content_top_flag' value='"+data.rtData[idx].top_flag+"' > ";
 		repeatItem += "                <input type='hidden' class = 'brd_content_board_good_count' value='"+data.rtData[idx].board_good_count+"' > ";		
-		repeatItem +=  "            </div>";
-		repeatItem +=  "        </div>";
-		repeatItem +=  "    </article>";
-		repeatItem +=  "</div>";
+		repeatItem += "</div>";
 		
 		repeatItemDIV += repeatItem;
 	}

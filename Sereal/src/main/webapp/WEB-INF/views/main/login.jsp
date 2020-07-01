@@ -25,7 +25,7 @@
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default" style="margin:auto; margin-top:20%; text-align:center; width:15%;">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Welcome to <br> JumanjiTalk</h3>
+                        <h3 class="panel-title">Welcome to <br> market Sereal</h3>
                     </div>
                     <div class="panel-body">
                         <form action="/main/authenticate" id="loginForm" method="get">

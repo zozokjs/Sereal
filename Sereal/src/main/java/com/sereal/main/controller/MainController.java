@@ -55,8 +55,7 @@ public class MainController {
 	
 
 	
-	//로그인 페이지에서 로그인 버튼 누르면 이쪽으로 옴.
-	//아이디와 비번 인증
+	//사용자 로그인 처리
 	@RequestMapping("/authenticate")
 	public String user_authenticate(TMemberInfoModel memberModel, Model model, HttpServletRequest request) {
 		
@@ -75,7 +74,7 @@ public class MainController {
 		//유효성 검사 후 세션 저장
 		if(model2 != null) {
 			
-			log.info("해당 아이디와 비번에 맞는 회원이 있음");
+			//log.info("해당 아이디와 비번에 맞는 회원이 있음");
 			
 			//기존 세션에 저장된 정보가 있을 경우 제거함
 			HttpSession session = request.getSession(); 			
@@ -95,9 +94,9 @@ public class MainController {
 			
 			session.setAttribute("sessionModel", sessionModel);
 			//return "redirect:/main";
-			return "redirect:/board/jumanjiBoardList";			
+			return "redirect:/board/generalBoardList";			
 		}else{			
-			log.info("해당 아이디와 비번에 맞는 회원이 없음");
+			//log.info("해당 아이디와 비번에 맞는 회원이 없음");
 			model.addAttribute("CAUSE", "NOT_AUTH");
 			return "redirect:/main/login";
 		}

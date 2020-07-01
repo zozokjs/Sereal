@@ -22,7 +22,8 @@
         <!-- Main end -->
         <!--=============== scripts  ===============-->
 <!--         <script src="/resources/js/jquery.min.js"></script>
- -->        <script src="/resources/js/plugins.js"></script>
+ -->        
+ 		<script src="/resources/js/plugins.js"></script>
         <script src="/resources/js/scripts.js"></script>
     </body>
 </html>
