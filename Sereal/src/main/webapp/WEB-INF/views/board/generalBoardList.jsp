@@ -402,6 +402,7 @@ function repeatHTML(data){
 		//*제품 제목 영역
 		repeatItem += "       <h4 class='card-title'>";
 		repeatItem += "           <a href='/board/search/"+data.rtData[idx].brd_idx+"/generalBoardView'>"+title+"</a>";
+		//repeatItem += "           <a href='javascript:boardSelectEvent("+data.rtData[idx].brd_idx+","+data.rtData[idx].grp_id+");'>"+title+"</a>";		
 		repeatItem += "        </h4>";
 		
 		

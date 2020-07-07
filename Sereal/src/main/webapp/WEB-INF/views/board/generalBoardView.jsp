@@ -38,7 +38,7 @@
                                 <div class="list-single-main-wrapper fl-wrap" id="sec2">
                                     <div class="list-single-main-media fl-wrap" style="margin-top:30px;">
 <!--                                             <img src="/resources/images/all/1.jpg" class="respimg" alt=""> -->
-                                        <img src="${boardDetail.brd_title_img_real_path}" class="respimg" alt="" style="width: 600px;height: 450px;">
+                                        <img src="${boardDetail.brd_title_img_real_path}" class="respimg" alt="이미지 로드 실패" style="width: 600px;height: 450px;">
                                         
                                     </div>
                                     <!-- list-single-main-item --> 
@@ -130,8 +130,8 @@ function messageToServer(){
 $(document).ready(function() {
 	
 	
-	//해당 게시판 그룹에 대한 내용 조회
-	searchBoardContent();
+	//해당 게시글  조회
+	//searchBoardContent();
 	
 	//소켓 연결
 	function connect(){
@@ -197,7 +197,7 @@ var searchBoardContent = function(){
 	var params = {};
 	//params.grp_id = "";
 	params.brd_idx = "${boardDetail.brd_idx}";
-	
+	//params.brd_idx = ${brd_idx};
 	var successFunc = function(data) {
 		
 		//조회 그만하게 하려면 성공 데이터에서 총 카운터를 리턴시켜서 총 카운터가 end_page보다 작거나 같다면 successFunc를 안 읽게 해야 함
@@ -210,7 +210,7 @@ var searchBoardContent = function(){
 		
 	};
 	
-	dataSource_transport("","/board/search/boardList", params, successFunc);
+	dataSource_transport("","/board/search/generalBoardView", params, successFunc);
 }
 
 

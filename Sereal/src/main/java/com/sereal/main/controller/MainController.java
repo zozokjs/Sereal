@@ -113,7 +113,7 @@ public class MainController {
 		HttpSession session = request.getSession(); 
 		session.removeAttribute("sessionModel");
 
-		return "redirect:/board/jumanjiBoardList";
+		return "redirect:/board/generalBoardList";
 	}
 		
 }

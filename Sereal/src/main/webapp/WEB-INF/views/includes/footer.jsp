@@ -14,8 +14,8 @@
 	<script src="/resources/startbootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- Bootstrap core JavaScript End -->
 	
-	<script src="/resources/js/plugins.js"></script>
-    <script src="/resources/js/scripts.js"></script>
+<!-- 	<script src="/resources/js/plugins.js"></script> -->
+<!--     <script src="/resources/js/scripts.js"></script> -->
     
 </body>
 

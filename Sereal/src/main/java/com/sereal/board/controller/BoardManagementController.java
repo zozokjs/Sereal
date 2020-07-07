@@ -92,12 +92,12 @@ public class BoardManagementController{
     //linkPage에 해당되는 jsp를 읽음
     @RequestMapping(value = "/{linkPage}", method={RequestMethod.POST, RequestMethod.GET})
 	public String pageNavigation(@PathVariable String linkPage, Model model, HttpServletRequest request) {
-          
-    	  //likePage로부터 baseSuffix에 해당되는 부분을 공백처리
-          //String viewPage = CommonUtil.replaceString(linkPage, baseSuffix, "");
-          
-
-          //return CommonUtil.getPagePath(pathFolder, viewPage, delim);
+    	log.info("[Controller] pageNavigation Read");		
+		  //likePage로부터 baseSuffix에 해당되는 부분을 공백처리
+	      //String viewPage = CommonUtil.replaceString(linkPage, baseSuffix, "");
+	      
+	
+	      //return CommonUtil.getPagePath(pathFolder, viewPage, delim);
     	switch(linkPage) {
 		case "generalBoardList" :
 	        
@@ -106,14 +106,15 @@ public class BoardManagementController{
 			//model.addAttribute("boardGroupList", gson.toJson(tBoardGroupService.selectList(paramMap))); 
 	          
 			break;
+			
 		default : 
 			break;
     	}
     	
-    	//board/{linkPage} 형식으로 리턴됨 > linkPage에 해당되는 페이지가 열린다.
+    	//board/{linkPage} 형식으로 리턴됨. 즉, linkPage에 해당되는 페이지가 열린다.
     	log.info(" > "+ CommonUtil.getPagePath(pathFolder, linkPage, delim));
     	
-    	return  CommonUtil.getPagePath(pathFolder, linkPage, delim);
+    	return CommonUtil.getPagePath(pathFolder, linkPage, delim);
 	}
     
     
@@ -197,39 +198,64 @@ public class BoardManagementController{
         return rtMap;			
 	}
 
-	
-	//1개 게시판에 해당되는 내용 조회 후 리턴
-	@RequestMapping(value = "/search/boardContent")
-	public @ResponseBody Map<String, Object>  generalBoardView(@RequestParam Map<String, Object> paramMap, Model model, HttpServletRequest httpServletRequest) {
+	/*
+	//게시글 상세 화면으로 단순 이동
+	@RequestMapping(value = "/search/{brd_idx}/generalBoardView")
+	public String generalBoardView(@PathVariable Integer brd_idx, Model model, HttpServletRequest httpServletRequest) {
 		log.info("[Controller] generalBoardView Read---------------------------------------------");		
+		
+		//JSONObject obj = JSONObject.;
+				
+		//return null;
+		
+		model.addAttribute("brd_idx", brd_idx);
+		return "board/generalBoardView";
+	}
+	*/
+	
+	//1개 게시글에 해당되는 내용 조회 후 리턴
+	@RequestMapping(value = "/search/{brd_idx}/generalBoardView")
+	public String generalBoardView2(@PathVariable Integer brd_idx, Model model, HttpServletRequest httpServletRequest) {
+		log.info("[Controller] generalBoardView2 Read---------------------------------------------");		
+		
 		Map<String, Object> rtMap = new HashMap<String, Object>();
 		
 		//String brd_idx = (String)paramMap.get("brd_idx");
 		
+		String grp_id = "PRD_001";
 		//String parent_brd_idx  =(String)paramMap.get("parent_brd_idx");
 		
+		TBoardContentModel contentModel_ =  new TBoardContentModel();
+		contentModel_.setBrd_idx(brd_idx);
+		contentModel_.setGrp_id(grp_id);
 		
 		//이 양식을 쓰려면 xml, mapper, service를 바꿔야 함 
 		//XML 리턴 타입 > MAP, MAPPER, SERVICE릐 매개변수를 MAP으로 
-		TBoardContentModel contentModel = service.selectBoardContent(CommonUtil.convertObjectToMap(paramMap, model));
-		byte[] content_byte = contentModel3.getBrd_content();		
+		//TBoardContentModel contentModel = service.selectBoardContent(CommonUtil.convertObjectToMap(paramMap, model));
+		TBoardContentModel contentModel = service.selectBoardContent(contentModel_);
+		
+		byte[] content_byte = contentModel.getBrd_content();		
 		String content_string = new String(content_byte);
-		contentModel3.setBrd_contentString(content_string);
+		contentModel.setBrd_contentString(content_string);
 			
-		String brd_short = contentModel3.getBrd_short();
-		contentModel3.setBrd_short(CommonUtil.replaceString(brd_short, "&0lt;", "<"));
-		String brd_title = contentModel3.getBrd_title();
-		contentModel3.setBrd_title(CommonUtil.replaceString(brd_title, "&0lt;", "<"));
+		String brd_short = contentModel.getBrd_short();
+		contentModel.setBrd_short(CommonUtil.replaceString(brd_short, "&0lt;", "<"));
+		String brd_title = contentModel.getBrd_title();
+		contentModel.setBrd_title(CommonUtil.replaceString(brd_title, "&0lt;", "<"));
 		
 		
 		
-		model.addAttribute("boardDetail", contentModel3);
-		//JSONObject obj = JSONObject.;
-				
-		return null;
+		//model.addAttribute("boardDetail", contentModel);
+		
+		rtMap.put("boardDetail", contentModel);
+		
+		
+		return "board/generalBoardView";
 	}
 	
-	//1개 게시판에 해당되는 댓글 내용 조회
+	
+	
+	//1개 게시글에 해당되는 댓글 내용 조회
 	@RequestMapping(value = "/search/boardViewReply")
 	public @ResponseBody Map<String, Object> boardViewReply(@RequestParam Map<String, Object> paramMap, Model model, HttpServletRequest httpServletRequest) {
 		log.info("[Controller] boardViewReply Read---------------------------------------------");		
