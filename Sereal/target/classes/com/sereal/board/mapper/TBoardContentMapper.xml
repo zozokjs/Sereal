@@ -14,15 +14,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 1개의 게시글 입력 -->
 	<insert id = "insertBoardContent">
-		<selectKey keyProperty = "brd_idx" order = "BEFORE" resultType ="integer">
+<!-- 		<selectKey keyProperty = "brd_idx" order = "BEFORE" resultType ="integer">
 		   	select Auto_increment 
 			from information_schema.tables 
-			where table_schema = 'jumanji' and table_name = 't_board_content';
-		</selectKey>
+			where table_schema = 'sereal' and table_name = 't_board_content';
+		</selectKey> -->
 		
-		insert into t_board_content(grp_id, brd_idx, user_idx, brd_title, brd_content, read_count, parent_brd_idx,
+		insert into t_board_content(grp_id, user_idx, brd_title, brd_content, read_count, parent_brd_idx,
 		brd_depth, top_flag, del_flag, secret_flag, reg_ip, reg_password, prd_url, brd_short, brd_good_count, brd_title_img_real_path, reg_nm, reg_dt)		
-		values ( #{grp_id}, #{brd_idx}, #{user_idx}, #{brd_title}, #{brd_content}, #{read_count}, #{parent_brd_idx}, 
+		values ( #{grp_id}, #{user_idx}, #{brd_title}, #{brd_content}, #{read_count}, #{parent_brd_idx}, 
 		#{brd_depth}, #{top_flag}, #{del_flag}, #{secret_flag}, #{reg_ip}, #{reg_password}, #{prd_url}, #{brd_short}, #{brd_good_count}, #{brd_title_img_real_path},
 		#{reg_nm}, #{reg_dt} )	
 	</insert>

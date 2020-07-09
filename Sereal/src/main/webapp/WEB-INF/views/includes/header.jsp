@@ -8,7 +8,7 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 		
-		<title>Shop Homepage - Start Bootstrap Template</title>
+		<title>Market Sereal</title>
 		
 		<!-- Bootstrap core CSS -->
 		<link type="text/css" href="/resources/startbootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -16,6 +16,37 @@
 		<!-- Custom styles for this template -->
 		<link type="text/css"  href="/resources/startbootstrap/css/shop-homepage.css" rel="stylesheet">
 	</head>
+	
+	
+	<!-- Navigation -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+		<div class="container">
+			<a class="navbar-brand" href="/board/generalBoardList">Market Sereal</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active">
+						<a class="nav-link" href="#">Home
+							<span class="sr-only">(current)</span>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">About</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Services</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Contact</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	
+	
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>

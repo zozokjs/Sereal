@@ -54,7 +54,6 @@
                                     </div>
                                                          
                                 </div>
-                             	
                              	<!-- 현재 이 글을 보고 있는 사람 수  -->
                              	<div>
                              		현재 이 글을 보고 있는 사람 수 : <input type="text" id="realTimeReadingCount" value="0" readonly>
@@ -242,7 +241,7 @@ function deleteBoard(){
 		console.log(data);
 	
 		
-		location.href = "/board/jumanjiBoardList";
+		location.href = "/board/generalBoardList";
 	}	
 	dataSource_transport("",controllerURL, params, successFunc);
 }

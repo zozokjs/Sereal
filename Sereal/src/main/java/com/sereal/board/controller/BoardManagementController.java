@@ -234,10 +234,12 @@ public class BoardManagementController{
 		//TBoardContentModel contentModel = service.selectBoardContent(CommonUtil.convertObjectToMap(paramMap, model));
 		TBoardContentModel contentModel = service.selectBoardContent(contentModel_);
 		
+		//db에 저장된 BLOB 자료형 변환
 		byte[] content_byte = contentModel.getBrd_content();		
 		String content_string = new String(content_byte);
 		contentModel.setBrd_contentString(content_string);
 			
+		log.info("check > "+contentModel.getBrd_contentString());
 		String brd_short = contentModel.getBrd_short();
 		contentModel.setBrd_short(CommonUtil.replaceString(brd_short, "&0lt;", "<"));
 		String brd_title = contentModel.getBrd_title();
@@ -245,9 +247,9 @@ public class BoardManagementController{
 		
 		
 		
-		//model.addAttribute("boardDetail", contentModel);
+		model.addAttribute("boardDetail", contentModel);
 		
-		rtMap.put("boardDetail", contentModel);
+		//rtMap.put("boardDetail", contentModel);
 		
 		
 		return "board/generalBoardView";
@@ -298,18 +300,13 @@ public class BoardManagementController{
 	@RequestMapping(value = "/{brdIdx}/generalBoardEdit")
 	public String generalBoardEdit(@PathVariable Integer brdIdx, Model model) {
 		log.info("[Controller] generalBoardEdit Read---------------------------------------------");		
-		log.info(brdIdx);
-		
 		
 		TBoardContentModel contentModel =  new TBoardContentModel();
 		contentModel.setBrd_idx(brdIdx);
 		contentModel.setGrp_id("PRD_001");
-	
 		
 		TBoardContentModel contentModel2 =  new TBoardContentModel();
-	
 		contentModel2 = service.selectBoardContent(contentModel);
-		
 		
 		byte[] content_byte = contentModel2.getBrd_content();		
 		String content_string = new String(content_byte);
@@ -320,7 +317,6 @@ public class BoardManagementController{
 		contentModel2.setBrd_title(CommonUtil.replaceString(brd_title, "&0lt;", "<"));		
 		String brd_short = contentModel2.getBrd_short();
 		contentModel2.setBrd_short(CommonUtil.replaceString(brd_short, "&0lt;", "<"));
-		
 		
 		model.addAttribute("boardDetail", contentModel2);
 		log.info("변환된 글자 "+content_string);;
@@ -574,7 +570,7 @@ public class BoardManagementController{
 		log.info("==================="); 
 		
 
-		return "redirect:jumanjiBoardList";	
+		return "redirect:generalBoardList";	
 		
     }
     
@@ -871,8 +867,8 @@ public class BoardManagementController{
             log.info("저장 파일 이름 : "+file_nm);
 
             //이미지 저장 경로 지정
-            String path = "E:\\pinno_workspace\\jumanji\\src\\main\\webapp\\resources\\upload\\";
-            
+            //String path = "E:\\pinno_workspace\\jumanji\\src\\main\\webapp\\resources\\upload\\";
+            String path = "F:\\Java_workspace_2020_This_Sereal_git\\Sereal\\src\\main\\webapp\\resources\\upload\\";
         	File folder = new File(path);            
             //해당 디렉토리 확인
             if(!folder.exists()){
@@ -992,7 +988,8 @@ public class BoardManagementController{
     	log.info("------------------3-------------------------");
         //서버에 저장된 이미지 경로
         //String path = fileDir.getPath() + "ckImage/";
-    	String path = "E:\\pinno_workspace\\jumanji\\src\\main\\webapp\\resources\\upload\\";
+    	//String path = "E:\\pinno_workspace\\jumanji\\src\\main\\webapp\\resources\\upload\\";
+    	String path = "F:\\Java_workspace_2020_This_Sereal_git\\Sereal\\src\\main\\webapp\\resources\\upload\\";
     	
     	//날짜별로 저장 폴더 생성 및 세팅
         File uploadPath = new File(path, getFolder());
