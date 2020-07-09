@@ -8,7 +8,7 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 		
-		<title>Market Sereal</title>
+		<title>Market Sereal </title>
 		
 		<!-- Bootstrap core CSS -->
 		<link type="text/css" href="/resources/startbootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
